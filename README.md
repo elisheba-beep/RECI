@@ -4,5 +4,4 @@ It shows different categories of meals and their recipes.
 
 ## Concepts Implemented
 * Safe-Area
-* React Navigation using:
-- stack
+* React Navigation using "Stack Navigator" and "Bottom Tabs Navigator"
