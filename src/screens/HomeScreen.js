@@ -17,6 +17,7 @@ export default function HomeScreen() {
     <NavigationContainer independent={true} styles={styles.container}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          tabBarHideOnKeyboard: true,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -31,6 +32,7 @@ export default function HomeScreen() {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
+
           tabBarActiveTintColor: "tomato",
           tabBarInactiveTintColor: "black",
           headerShadowVisible: false,
