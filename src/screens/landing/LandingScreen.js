@@ -14,7 +14,6 @@ import CategoryItem from "../../components/CategoryItem";
 import { categories } from "../../utils/category";
 import { trending } from "../../utils/trending";
 import { styles } from "../../styles/LandingScreenStyles";
-import SingleRecipeScreen from "../SingleRecipeScreen";
 
 export default function LandingScreen({ navigation }) {
   // function to render category items in a flatlist
@@ -62,14 +61,14 @@ export default function LandingScreen({ navigation }) {
           <Text style={styles.categoriesText}>Trending</Text>
 
           <View style={styles.trendingSection}>
-            {trending.map((item) => {
+            {trending.map((item, index) => {
               return (
                 <Pressable
                   onPress={() =>
                     navigation.navigate("SingleRecipe")
                   }
                 >
-                  <View style={styles.trendingItem} key={item.index}>
+                  <View style={styles.trendingItem} key={index}>
                     <Image
                       source={item.url}
                       resizeMode="cover"
