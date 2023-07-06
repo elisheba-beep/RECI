@@ -3,11 +3,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LandingScreen from "./LandingScreen";
+import LandingScreen from "./landing/LandingScreen";
 import RecipesScreen from "./RecipesScreen";
 import SavedRecipesScreen from "./SavedRecipesScreen";
 import ProfileScreen from "./ProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
+import Landing from "./landing";
 
 // bottom tab navigator
 const Tab = createBottomTabNavigator();
@@ -48,7 +49,7 @@ export default function HomeScreen() {
           },
         })}
       >
-        <Tab.Screen name="Landing" component={LandingScreen} />
+        <Tab.Screen name="Landing" component={Landing} />
         <Tab.Screen name="Recipes" component={RecipesScreen} />
         <Tab.Screen name="Saved Recipes" component={SavedRecipesScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />

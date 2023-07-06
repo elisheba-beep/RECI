@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import CategoryItem from "../components/CategoryItem";
-import { categories } from "../utils/category";
-import { trending } from "../utils/trending";
-import { styles } from "../styles/LandingScreenStyles";
+import CategoryItem from "../../components/CategoryItem";
+import { categories } from "../../utils/category";
+import { trending } from "../../utils/trending";
+import { styles } from "../../styles/LandingScreenStyles";
+import SingleRecipeScreen from "../SingleRecipeScreen";
 
-export default function LandingScreen() {
+export default function LandingScreen({ navigation }) {
   // function to render category items in a flatlist
   const renderCategoryItem = ({ item }) => (
     <CategoryItem url={item.url} title={item.title} />
@@ -23,7 +24,7 @@ export default function LandingScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* header */}
         <View style={styles.header}>
           <View>
@@ -63,17 +64,23 @@ export default function LandingScreen() {
           <View style={styles.trendingSection}>
             {trending.map((item) => {
               return (
-                <View style={styles.trendingItem}>
-                  <Image
-                    source={item.url}
-                    resizeMode="cover"
-                    style={styles.trendingImage}
-                  />
-                  <Text style={styles.trendingText}>{item.title}</Text>
-                  <Pressable style={styles.viewMoreButton}>
-                    <Text>Read More</Text>
-                  </Pressable>
-                </View>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("SingleRecipe")
+                  }
+                >
+                  <View style={styles.trendingItem} key={item.index}>
+                    <Image
+                      source={item.url}
+                      resizeMode="cover"
+                      style={styles.trendingImage}
+                    />
+                    <Text style={styles.trendingText}>{item.title}</Text>
+                    <Pressable style={styles.viewMoreButton}>
+                      <Text>Read More</Text>
+                    </Pressable>
+                  </View>
+                </Pressable>
               );
             })}
           </View>
