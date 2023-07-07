@@ -1,5 +1,6 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -14,13 +15,31 @@ import CategoryItem from "../../components/CategoryItem";
 import { categories } from "../../utils/category";
 import { trending } from "../../utils/trending";
 import { styles } from "../../styles/LandingScreenStyles";
+import { getRecipes } from "../../api/tasty";
 
 export default function LandingScreen({ navigation }) {
   // function to render category items in a flatlist
   const renderCategoryItem = ({ item }) => (
     <CategoryItem url={item.url} title={item.title} />
   );
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [more, setMore] = useState(false);
+  const myRecipes = async () => {
+    try {
+      const recipes = await getRecipes();
+      setData(recipes);
+      
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    myRecipes();
+  }, []);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -61,27 +80,42 @@ export default function LandingScreen({ navigation }) {
           <Text style={styles.categoriesText}>Trending</Text>
 
           <View style={styles.trendingSection}>
-            {trending.map((item, index) => {
-              return (
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate("SingleRecipe")
-                  }
-                >
-                  <View style={styles.trendingItem} key={index}>
-                    <Image
-                      source={item.url}
-                      resizeMode="cover"
-                      style={styles.trendingImage}
-                    />
-                    <Text style={styles.trendingText}>{item.title}</Text>
-                    <Pressable style={styles.viewMoreButton}>
-                      <Text>Read More</Text>
-                    </Pressable>
-                  </View>
-                </Pressable>
-              );
-            })}
+            {isLoading ? (
+              <ActivityIndicator />
+            ) : (
+              data.map((recipe, index) => {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate("SingleRecipe", {
+                        recipeName: recipe.name,
+                        recipeUrl: recipe.thumbnail_url,
+                        prepTime: recipe.prep_time_minutes,
+                        totalTime: recipe.total_time_minutes,
+                        servings: recipe.yields,
+                      })
+                    }
+                  >
+                    <View style={styles.trendingItem} key={index}>
+                      <Image
+                        source={{ uri: recipe.thumbnail_url }}
+                        resizeMode="cover"
+                        style={styles.trendingImage}
+                      />
+                      <Text style={styles.trendingText} numberOfLines={2}>
+                        {recipe.name}
+                      </Text>
+                      <Pressable
+                        style={styles.viewMoreButton}
+                        onPress={() => {}}
+                      >
+                        <Text>{more ? "Read Less" : "Read More"}</Text>
+                      </Pressable>
+                    </View>
+                  </Pressable>
+                );
+              })
+            )}
           </View>
         </View>
       </ScrollView>

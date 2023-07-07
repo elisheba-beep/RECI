@@ -12,7 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { windowWidth } from "../utils/window";
 import { ingredients } from "../utils/ingredients";
 
-export default function SingleRecipeScreen({ navigation }) {
+export default function SingleRecipeScreen({route, navigation }) {
+  const { recipeName, recipeUrl, prepTime, totalTime, servings } = route.params;
+  
+let yields = servings.charAt(servings.length - 1);
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -25,19 +28,19 @@ export default function SingleRecipeScreen({ navigation }) {
             <Ionicons name="ellipsis-vertical" size={24} color={"#434343"} />
           </Pressable>
         </View>
-        <Image style={styles.image} source={require("../img/pizza.png")} />
-        <Text style={styles.recipeName}>Handmade Pizza</Text>
+        <Image style={styles.image} source={{uri: recipeUrl}} />
+        <Text style={styles.recipeName}>{recipeName}</Text>
         <View style={styles.recipeDetails}>
           <View>
-            <Text style={styles.detailValue}>2 hrs</Text>
+            <Text style={styles.detailValue}>{prepTime} mins</Text>
             <Text>Prep Time</Text>
           </View>
           <View>
-            <Text style={styles.detailValue}>30 mins</Text>
+            <Text style={styles.detailValue}>{parseInt(totalTime) - parseInt(prepTime)} mins</Text>
             <Text>Cook Time</Text>
           </View>
           <View>
-            <Text style={styles.detailValue}>4-6</Text>
+            <Text style={styles.detailValue}>{yields}</Text>
             <Text>Servings</Text>
           </View>
         </View>

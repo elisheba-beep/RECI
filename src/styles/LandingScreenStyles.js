@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
   trendingItem: {
     borderRadius: 8,
     width: windowWidth / 2.7,
-    height: 230,
+    height: 250,
     backgroundColor: "#FFFFFF",
     margin: 8,
     alignItems: "center",
@@ -71,6 +71,7 @@ export const styles = StyleSheet.create({
   },
   trendingText: {
     fontSize: 16,
+    paddingHorizontal: 5,
   },
   viewMoreButton: {
     borderColor: "#F26419",
