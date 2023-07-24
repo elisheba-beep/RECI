@@ -12,10 +12,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { windowWidth } from "../utils/window";
 import { ingredients } from "../utils/ingredients";
 
-export default function SingleRecipeScreen({route, navigation }) {
+
+export default function SingleRecipeScreen({ route, navigation }) {
   const { recipeName, recipeUrl, prepTime, totalTime, servings } = route.params;
-  
-let yields = servings.charAt(servings.length - 1);
+  // number of servings
+  let yields = servings.charAt(servings.length - 1);
+  var r = /\d+/;
+  var serving = servings.match(r);
+
+  const data = {
+    uri: recipeUrl,
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -28,7 +35,7 @@ let yields = servings.charAt(servings.length - 1);
             <Ionicons name="ellipsis-vertical" size={24} color={"#434343"} />
           </Pressable>
         </View>
-        <Image style={styles.image} source={{uri: recipeUrl}} />
+        <Image style={styles.image} source={{ uri: recipeUrl }} />
         <Text style={styles.recipeName}>{recipeName}</Text>
         <View style={styles.recipeDetails}>
           <View>
@@ -36,12 +43,23 @@ let yields = servings.charAt(servings.length - 1);
             <Text>Prep Time</Text>
           </View>
           <View>
-            <Text style={styles.detailValue}>{parseInt(totalTime) - parseInt(prepTime)} mins</Text>
+            <Text style={styles.detailValue}>
+              {parseInt(totalTime) - parseInt(prepTime)} mins
+            </Text>
             <Text>Cook Time</Text>
           </View>
           <View>
-            <Text style={styles.detailValue}>{yields}</Text>
-            <Text>Servings</Text>
+            <Text style={styles.detailValue}>
+              {typeof yields == "number" ? yields : serving}
+            </Text>
+            <Text>
+              Serving
+              {typeof yields == "number" && yields > 1
+                ? "s"
+                : serving > 1
+                ? "s"
+                : ""}
+            </Text>
           </View>
         </View>
         <View style={styles.ingredientsHeader}>

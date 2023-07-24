@@ -4,6 +4,8 @@ import { windowWidth } from "../utils/window";
 export const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    padding: 30,
+
   },
   container: {
     padding: 30,

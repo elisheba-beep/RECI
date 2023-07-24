@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function LoginScreen({ navigation }) {
+export default function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
       accessibility={true}
